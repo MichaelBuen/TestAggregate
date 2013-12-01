@@ -1,0 +1,10 @@
+/Users/Michael/Projects/TestAggregate/TestAggregate/obj/x86/Debug/.NETFramework,Version=v4.0.AssemblyAttribute.cs
+/Users/Michael/Projects/TestAggregate/TestAggregate/bin/Debug/TestAggregate.exe.mdb
+/Users/Michael/Projects/TestAggregate/TestAggregate/bin/Debug/TestAggregate.exe
+/Users/Michael/Projects/TestAggregate/TestAggregate/obj/x86/Debug/TestAggregate.exe
+/Users/Michael/Projects/TestAggregate/TestAggregate/obj/x86/Debug/TestAggregate.exe.mdb
+/Users/Michael/Projects/TestAggregate/TestAggregate/bin/Debug/Iesi.Collections.dll
+/Users/Michael/Projects/TestAggregate/TestAggregate/bin/Debug/NHibernate.dll
+/Users/Michael/Projects/TestAggregate/TestAggregate/bin/Debug/Mono.Security.dll
+/Users/Michael/Projects/TestAggregate/TestAggregate/bin/Debug/Npgsql.dll
+/Users/Michael/Projects/TestAggregate/TestAggregate/bin/Debug/policy.2.0.Npgsql.dll

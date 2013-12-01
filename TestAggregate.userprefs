@@ -1,0 +1,18 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="TestAggregate/Program.cs">
+    <Files>
+      <File FileName="TestAggregate/Program.cs" Line="85" Column="241" />
+      <File FileName="TestAggregate/DomainModels.cs" Line="1" Column="1" />
+      <File FileName="TestAggregate/DomainModels/Person.cs" Line="1" Column="1" />
+      <File FileName="TestAggregate/DomainModelMappings/PersonMapping.cs" Line="1" Column="1" />
+      <File FileName="TestAggregate/SessionMapper/Mapper.cs" Line="1" Column="1" />
+      <File FileName="TestAggregate/DomainModels/FavoriteStuff.cs" Line="1" Column="1" />
+      <File FileName="TestAggregate/DomainModelMappings/FavoriteStuffMapping.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
