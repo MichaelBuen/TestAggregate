@@ -100,7 +100,7 @@ namespace TestDdd.DomainModels
         // Example, it is more efficient to add a condition to IQueryable than to add a condition on IList; 
         // all IList elements shall be eagerly-loaded when adding a condition on it.
 
-        // This eagerly-loads all the FavoriteHobby of FavoriteHobbies:
+        // This eagerly-loads all the FavoriteHobby of FavoriteHobbies even we use Extra+Lazy
         //      return this.FavoriteHobbies.Count(x => x.IsActive);
 
         // TL;DR: So use IQueryable.
@@ -109,7 +109,7 @@ namespace TestDdd.DomainModels
             get
             {
                 // Only the actives
-                return this.FavoriteHobbiessDirectDB.Count(x => x.Person == this && x.IsActive); // Hobbies' items will be eagerly-loaded when we add a condition on its Count
+                return this.FavoriteHobbiessDirectDB.Count(x => x.Person == this && x.IsActive); 
             }
         }
 
