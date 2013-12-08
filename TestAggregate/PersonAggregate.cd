@@ -1,27 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="TestDdd.DomainModels.Person">
-    <Position X="6.75" Y="1" Width="4.25" />
+    <Position X="1.5" Y="0.75" Width="4.25" />
     <TypeIdentifier>
-      <HashCode>AABAAEAACAAAQAAEAAAAAAQAIAAACQCEAAAIAAEAAEg=</HashCode>
+      <HashCode>AAAAAEAAAAAABABEAARBAAEAIAAAAAAEBAAAAAEAAAg=</HashCode>
       <FileName>DomainModels\Person.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="FavoriteHobbiess" />
+      <Property Name="FavoriteHobbies" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="TestDdd.DomainModels.PersonBusinessIntelligence">
-    <Position X="7" Y="5.25" Width="4" />
+    <Position X="6" Y="0.75" Width="4" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAABAAAAAAQAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAIAgAAACAAgQAAAgAAAAAAAACAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>DomainModels\Person.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TestDdd.DomainModels.FavoriteHobbies">
-    <Position X="3.75" Y="1.5" Width="1.5" />
+  <Class Name="TestDdd.DomainModels.FavoriteHobby">
+    <Position X="1.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIAAAAAAIAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>DomainModels\FavoriteHobbies.cs</FileName>
+      <HashCode>AIAAAAAAAAQAAAAAEAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>DomainModels\FavoriteStuff.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
