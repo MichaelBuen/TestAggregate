@@ -48,9 +48,9 @@ namespace TestDdd
 			using(var tx = s.BeginTransaction())
 			{
 				var p = s.Load<Person> (1);
-
+                
                 var fh = new FavoriteHobby { Hobby = "xAdd : " +  DateTime.Now.ToString () };
-				p.AddFavoriteHobbies (fh);                
+				p.AddFavoriteHobby (fh, s.Save);  
 
 				p.ApplyBusinessLogic (actionWhenValidated: tx.Commit);
 			}//using
@@ -67,27 +67,28 @@ namespace TestDdd
             {
                 var p = s.Load<Person>(1);
 
-                //foreach (var z in p.FavoriteHobbiess.OrderBy(x => x.FavoriteHobbiesId))
+                //foreach (var z in p.FavoriteHobbies.OrderBy(x => x.FavoriteHobbyId))
                 //{
-                //    Console.WriteLine("{0} {1}", z.FavoriteHobbiesId, z.Hobbies);
+                //    Console.WriteLine("{0} {1}", z.FavoriteHobbyId, z.Hobby);
                 //}
 
                 // p.FirstName = p.FirstName + "X";
 
 
-                var fh = s.Load<FavoriteHobby>(9);
+                var fh = s.Load<FavoriteHobby>(13);
 
-                fh.Hobby = "Yodelex";
- 
-   
+
+                p.UpdateFavoriteHobby(fh, "YodelYo" + DateTime.Now.ToString());
 
 
                 p.ApplyBusinessLogic(actionWhenValidated: tx.Commit);
 
-                //foreach (var z in p.FavoriteHobbiess.OrderBy(x => x.FavoriteHobbiesId))
+
+                //foreach (var z in p.FavoriteHobbies.OrderBy(x => x.FavoriteHobbyId))
                 //{
-                //    Console.WriteLine("{0} {1}", z.FavoriteHobbiesId, z.Hobbies);
+                //    Console.WriteLine("{0} {1}", z.FavoriteHobbyId, z.Hobby);
                 //}
+
 
 
             }//using

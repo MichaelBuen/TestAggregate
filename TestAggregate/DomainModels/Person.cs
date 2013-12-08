@@ -21,6 +21,9 @@ namespace TestDdd.DomainModels
 
 		// Stop the Anemic Domain Model! Let's practice Rich Domain Model!
 
+        // It's better to put the Rich Domain Model on model's extension methods than on the model itself
+        // NHibernate eagerly-loads the model if you access its properties/methods, regardless of them being mapped/unmapped
+
 
 		// http://www.martinfowler.com/bliki/AnemicDomainModel.html
 
@@ -36,49 +39,7 @@ namespace TestDdd.DomainModels
         }
 
 
-		public virtual void ApplyBusinessLogic(Action actionWhenValidated)
-		{
-			// Business Logic / Validation goes here
-
-
-
-			actionWhenValidated ();
-		}
-
-		
-		public virtual void AddFavoriteHobbies(FavoriteHobby fh)
-		{
-			// Business Logic / Validation goes here
-
-			fh.Person = this;
-			this.FavoriteHobbies.Add (fh);
-		}
-
-
-		
-		public virtual void UpdateFavoriteHobbies(FavoriteHobby fh, string Hobbies)
-		{
-			// Business Logic / Validation goes here
-
-			fh.Hobby = Hobbies;
-		}
-
-
-
-
-		public virtual void DeleteFavoriteHobby(FavoriteHobby fh, Action<object> immediateDeleter = null)
-		{
-			// Business Logic / Validation goes here
-
-            if (immediateDeleter != null)
-                immediateDeleter(fh);
-            else
-                this.FavoriteHobbies.Remove(fh);    
-
-		}
-
         
-
 		// Get First Favorite. DDD Purist, everything the model need to know are in its aggregate. Inefficient
 		public virtual FavoriteHobby MostFavoriteInefficient
 		{
@@ -156,6 +117,16 @@ namespace TestDdd.DomainModels
             return fh.Count(x => x.Person == this && x.IsActive);            
         }
 
+        public virtual void UpdateFavoriteHobbySlow(FavoriteHobby fh, string Hobbies)
+        {
+            // Business Logic / Validation goes here
+
+            fh.Person = this;
+
+            fh.Hobby = Hobbies;
+
+        }
+
     }
 
     // HOWEVER!!!  
@@ -188,7 +159,54 @@ namespace TestDdd.DomainModels
             return p.GetTwoRecentFavoritesExtensionMethod(fh).OrderBy(x => x.FavoriteHobbyId).Take(1).Single();            
         }
 
+        public static void ApplyBusinessLogic(this Person p, Action actionWhenValidated)
+        {
+            // Business Logic / Validation goes here
+
+            actionWhenValidated();
+        }
+
+
+
+        // returns FavoriteHobby id
+        public static int AddFavoriteHobby(this Person p, FavoriteHobby fh, Func<FavoriteHobby, object> immediateAddAction)
+        {
+            // Business Logic / Validation goes here
+
+            fh.Person = p;
+
+            int id = 0;
+
+            if (immediateAddAction != null)
+                id = (int)immediateAddAction(fh);
+            else
+                id = 0;
+
+            return id;
+            
+        }
+
+        public static void UpdateFavoriteHobby(this Person p, FavoriteHobby fh, string Hobbies)
+        {
+            // Business Logic / Validation goes here
+
+            fh.Person = p;
+
+            fh.Hobby = Hobbies;
+
+        }
         
+
+        public static void DeleteFavoriteHobby(this Person p, FavoriteHobby fh, Action<object> immediateDeleter = null)
+        {
+            // Business Logic / Validation goes here
+
+            if (immediateDeleter != null)
+                immediateDeleter(fh);
+            else
+                p.FavoriteHobbies.Remove(fh);
+
+        }
 
      
     }
