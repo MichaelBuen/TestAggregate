@@ -21,7 +21,7 @@ namespace TestDdd.DomainModels
 
 		// Stop the Anemic Domain Model! Let's practice Rich Domain Model!
 
-        // It's better to put the Rich Domain Model on model's extension methods than on the model itself
+        // It's better to put the Rich Domain Model's behavior on model's extension methods than on the model itself
         // NHibernate eagerly-loads the model if you access its properties/methods, regardless of them being mapped/unmapped
 
 
