@@ -35,8 +35,7 @@ namespace TestDdd
 				var p = s.Load<Person> (1);
 
                 var fs = new FavoriteStuff { Stuff = "xAdd : " +  DateTime.Now.ToString () };
-				p.AddFavoriteStuff (fs);
-                // s.Persist(fs);
+				p.AddFavoriteStuff (fs);                
 
 				p.ApplyBusinessLogic (actionWhenValidated: tx.Commit);
 			}//using
@@ -88,63 +87,20 @@ namespace TestDdd
                 using (var s = SessionMapper.Mapper.SessionFactory.OpenSession())
                 using (var tx = s.BeginTransaction())
                 {
-                    //var px = s.Load<Person>(1);
-
-
-
-                    //var fsd = s.Load<FavoriteStuff>(22);
-                    //s.Delete(fsd);
-
-
-                    //tx.Commit();
-
-
-                    //foreach (var ix in px.FavoriteStuffs.OrderBy(x => x.FavoriteStuffId))
-                    //{
-                    //    Console.WriteLine("{0} {1}", ix.FavoriteStuffId, ix.Stuff);
-                    //}
-
-
-
-
-                    //return;
+                  
                     var p = s.Load<Person>(1);
 
 
                     //bool isInit = NHibernate.NHibernateUtil.IsInitialized(p.FavoriteStuffs);
-                    //Console.WriteLine("Is Init {0}", isInit);
-                    ////foreach (var z in p.FavoriteStuffs.OrderBy(x => x.FavoriteStuffId))
-                    ////{
-                    ////    Console.WriteLine("{0} {1}", z.FavoriteStuffId, z.Stuff);
-                    ////}
-                    //isInit = NHibernate.NHibernateUtil.IsInitialized(p.FavoriteStuffs);
-                    //Console.WriteLine("Is Init {0}", isInit);
-
+                    
 
                     var fs = s.Load<FavoriteStuff>(32);
 
 
-                    p.DeleteFavoriteStuffEfficient(fs);
+                    p.DeleteFavoriteStuff(fs);
 
-
+                    p.ApplyBusinessLogic(actionWhenValidated: () => tx.Commit());
                     
-
-                    //foreach (var z in p.FavoriteStuffs.OrderBy(x => x.FavoriteStuffId))
-                    //{
-                    //    Console.WriteLine("{0} {1}", z.FavoriteStuffId, z.Stuff);
-                    //}
-
-                    // isInit = NHibernate.NHibernateUtil.IsInitialized(p.FavoriteStuffs);
-                    //Console.WriteLine("Is Init {0}", isInit);
-
-                    
-                    //p.ApplyBusinessLogic(actionWhenValidated: () => tx.Commit(), checkInitialized: NHibernate.NHibernateUtil.IsInitialized, deleter: s.Delete);
-                    tx.Commit();
-
-                    //foreach (var z in p.FavoriteStuffs.OrderBy(x => x.FavoriteStuffId))
-                    //{
-                    //    Console.WriteLine("{0} {1}", z.FavoriteStuffId, z.Stuff);
-                    //}
 
                 }//using
   

@@ -60,7 +60,7 @@ namespace TestDdd.DomainModels
 
 
 
-		public virtual void DeleteFavoriteStuffEfficient(FavoriteStuff fs, Action<object> immediateDeleter = null)
+		public virtual void DeleteFavoriteStuff(FavoriteStuff fs, Action<object> immediateDeleter = null)
 		{
 			// Business Logic / Validation goes here
 
