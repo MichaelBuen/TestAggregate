@@ -180,7 +180,9 @@ namespace TestDdd.DomainModels
             if (immediateAddAction != null)
                 id = (int)immediateAddAction(fh);
             else
-                id = 0;
+            {
+                p.FavoriteHobbies.Add(fh);
+            }
 
             return id;
             
@@ -197,12 +199,12 @@ namespace TestDdd.DomainModels
         }
         
 
-        public static void DeleteFavoriteHobby(this Person p, FavoriteHobby fh, Action<object> immediateDeleter = null)
+        public static void DeleteFavoriteHobby(this Person p, FavoriteHobby fh, Action immediateDeleter = null)
         {
             // Business Logic / Validation goes here
 
             if (immediateDeleter != null)
-                immediateDeleter(fh);
+                immediateDeleter();
             else
                 p.FavoriteHobbies.Remove(fh);
 

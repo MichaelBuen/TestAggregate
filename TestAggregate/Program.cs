@@ -108,9 +108,10 @@ namespace TestDdd
 
                     //bool isInit = NHibernate.NHibernateUtil.IsInitialized(p.FavoriteHobbiess);
                     
-                    var fh = s.Load<FavoriteHobby>(2);
-                    
-                    p.DeleteFavoriteHobby(fh, s.Delete);
+                    var fh = s.Load<FavoriteHobby>(17);
+                    p.DeleteFavoriteHobby(fh, () => s.Delete(new FavoriteHobby { FavoriteHobbyId = fh.FavoriteHobbyId }));
+
+                    // p.DeleteFavoriteHobby(fh); eager-loads both Person and FavoriteHobby
 
                     p.ApplyBusinessLogic(actionWhenValidated: () => tx.Commit());
                     
