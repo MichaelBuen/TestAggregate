@@ -10,7 +10,8 @@ public class Person
 }
 
 
-This is not DDD. DDD must encapsulate, if we access Hobbies count directly we "can't" add any further condition on it, say only count the active hobbies.
+This is not DDD. DDD must encapsulate, if we access Hobbies count directly we "can't" add any further condition(say only count the active hobbies) on it and expect the code to be performant, see further comments below.
+
 
 	var p = session.Load<Person>(1);
 	Console.WriteLine("Count: {0}", p.Hobbies.Count());
