@@ -15,7 +15,7 @@ namespace TestDdd.DomainModels
 		public virtual string FirstName { get; set; }
 		public virtual string LastName { get; set; }
 
-		public virtual IList<FavoriteStuff> FavoriteStuffs { get; set; }
+		public virtual IList<FavoriteHobby> FavoriteHobbies { get; set; }
 
         
 
@@ -27,7 +27,7 @@ namespace TestDdd.DomainModels
 		// http://www.slideshare.net/chris.e.richardson/building-rich-domain-models
 
 
-        public virtual IQueryable<FavoriteStuff> FavoriteStuffsDirectDB { get; set; }
+        public virtual IQueryable<FavoriteHobby> FavoriteHobbiessDirectDB { get; set; }
 
 
         public virtual void AccessingAnyMethodOrPropertyOfTheModelWillEagerLoadTheModel()
@@ -46,105 +46,114 @@ namespace TestDdd.DomainModels
 		}
 
 		
-		public virtual void AddFavoriteStuff(FavoriteStuff fs)
+		public virtual void AddFavoriteHobbies(FavoriteHobby fh)
 		{
 			// Business Logic / Validation goes here
 
-			fs.Person = this;
-			this.FavoriteStuffs.Add (fs);
+			fh.Person = this;
+			this.FavoriteHobbies.Add (fh);
 		}
 
 
 		
-		public virtual void UpdateFavoriteStuff(FavoriteStuff fs, string stuff)
+		public virtual void UpdateFavoriteHobbies(FavoriteHobby fh, string Hobbies)
 		{
 			// Business Logic / Validation goes here
 
-			fs.Stuff = stuff;
+			fh.Hobby = Hobbies;
 		}
 
 
 
 
-		public virtual void DeleteFavoriteStuff(FavoriteStuff fs, Action<object> immediateDeleter = null)
+		public virtual void DeleteFavoriteHobby(FavoriteHobby fh, Action<object> immediateDeleter = null)
 		{
 			// Business Logic / Validation goes here
 
             if (immediateDeleter != null)
-                immediateDeleter(fs);
+                immediateDeleter(fh);
             else
-                this.FavoriteStuffs.Remove(fs);    
+                this.FavoriteHobbies.Remove(fh);    
 
 		}
 
         
 
 		// Get First Favorite. DDD Purist, everything the model need to know are in its aggregate. Inefficient
-		public virtual FavoriteStuff MostFavoriteInefficient
+		public virtual FavoriteHobby MostFavoriteInefficient
 		{
-			get { return this.FavoriteStuffs.OrderBy (x => x.FavoriteStuffId).Take (1).Single ();  }
+			get { return this.FavoriteHobbies.OrderBy (x => x.FavoriteHobbyId).Take (1).Single ();  }
 		}
 
 
 		// Get First Favorite. Pragmatic, efficient
-		public virtual IQueryable<FavoriteStuff> TwoRecentFavorites
+		public virtual IQueryable<FavoriteHobby> TwoRecentFavorites
 		{
             get
             {
-                return this.FavoriteStuffsDirectDB.Where(x => x.Person == this).OrderByDescending(x => x.FavoriteStuffId).Take(2);
+                return this.FavoriteHobbiessDirectDB.Where(x => x.Person == this).OrderByDescending(x => x.FavoriteHobbyId).Take(2);
             }
 		}
 
 
         // DDD espouses code re-use and centralized code
-        public virtual FavoriteStuff FirstOfTwoRecentFavorites 
+        public virtual FavoriteHobby FirstOfTwoRecentFavorites 
         {
             get
             {
-                return this.TwoRecentFavorites.OrderBy(x => x.FavoriteStuffId).Take(1).Single();
+                return this.TwoRecentFavorites.OrderBy(x => x.FavoriteHobbyId).Take(1).Single();
             }
         }
 
 
 
-        // Efficient when coupled with Extra and Lazy
-        // Good for pure DDD. Onet-stop-shop
-        // But inefficient when need to add conditions on Count        
-        public virtual int FavoriteStuffCount
+        // Efficient when coupled with Extra and Lazy. Count will be performed on the DB side
+        // Good for pure DDD. Onet-stop-shop.
+        // However, inefficient when need to add conditions on Count, NHibernate will eagerly-load the list when we add a condition on its collection even we use Extra+Lazy
+        public virtual int FavoriteHobbiesCount
         {
             get
             {
-                // Thanks Extra Lazy! Check this on PersonMapping
+                // Thanks Extra+Lazy! Check this on PersonMapping
                 // rel.Lazy(NHibernate.Mapping.ByCode.CollectionLazy.Extra | NHibernate.Mapping.ByCode.CollectionLazy.Lazy);
 
-                return this.FavoriteStuffs.Count();
+                return this.FavoriteHobbies.Count();
             }
         }
 
         
-		// If there's no Extra+Lazy it would be more pragmatic to pass the IQueryable<FavoriteStuff> to Person and use that IQueryable		
-		public virtual int FavoriteStuffCountFromQueryable
+		// If there's no Extra+Lazy it would be more pragmatic to pass the IQueryable<FavoriteHobbies> to Person and use IQueryable. 		
+		public virtual int FavoriteHobbiesCountFromQueryable
 		{
             get
             {
-                return this.FavoriteStuffsDirectDB.Where(x => x.Person == this).Count();
+                return this.FavoriteHobbiessDirectDB.Count(x => x.Person == this);
             }
 		}
 
 
 
-        // But really it's better to use IQueryable than using Extra+Lazy.
+        // But really it's better and pragmatic to use IQueryable than using Extra+Lazy.
         // We can't be a DDD purist for far too long when we need our code to be performant.
-        // Example, it is more efficient to add a condition to IQueryable than to a condition on IList; 
+        // Example, it is more efficient to add a condition to IQueryable than to add a condition on IList; 
         // all IList elements shall be eagerly-loaded when adding a condition on it.
-        // So use IQueryable.
-        public virtual int FavoriteStuffCountExceptFirstFromQueryable
+
+        // This eagerly-loads all the FavoriteHobby of FavoriteHobbies:
+        //      return this.FavoriteHobbies.Count(x => x.IsActive);
+
+        // TL;DR: So use IQueryable.
+        public virtual int FavoriteActiveHobbiesCountFromQueryable
         {
             get
             {
                 // Except first
-                return this.FavoriteStuffsDirectDB.Where(x => x.FavoriteStuffId > 1 && x.Person == this).Count();
+                return this.FavoriteHobbiessDirectDB.Count(x => x.Person == this && x.IsActive);
             }
+        }
+
+        public virtual int GetFavoriteActiveHobbiesCountFromQueryable(IQueryable<FavoriteHobby> fh)
+        {            
+            return fh.Count(x => x.Person == this && x.IsActive);            
         }
 
     }
@@ -155,22 +164,31 @@ namespace TestDdd.DomainModels
     // Static method won't eager-load the Person
     public static class PersonBusinessIntelligence
     {        
-        public static int GetFavoriteStuffCountExceptFirstFromQueryable(this Person p, IQueryable<FavoriteStuff> fs)
+        public static int GetFavoriteHobbiesCountFromQueryableExtensionMethod(this Person p, IQueryable<FavoriteHobby> fh)
         {
-            return fs.Where(x => x.Person == p).Count();
+            return fh.Count(x => x.Person == p);
+        }
+
+
+        public static int GetFavoriteActiveHobbiesCountFromQueryableExtensionMethod(this Person p, IQueryable<FavoriteHobby> fh)
+        {
+            Console.WriteLine("Extension method version");
+            return fh.Count(x => x.Person == p && x.IsActive);
         }
 
         
-        public static IQueryable<FavoriteStuff> GetTwoRecentFavorites(this Person p, IQueryable<FavoriteStuff> fs)
+        public static IQueryable<FavoriteHobby> GetTwoRecentFavoritesExtensionMethod(this Person p, IQueryable<FavoriteHobby> fh)
         {
-            return fs.Where(x => x.Person == p).OrderByDescending(x => x.FavoriteStuffId).Take(2);            
+            return fh.Where(x => x.Person == p).OrderByDescending(x => x.FavoriteHobbyId).Take(2);            
         }
 
         
-        public static FavoriteStuff GetFirstOfTwoRecentFavorites(this Person p, IQueryable<FavoriteStuff> fs)
+        public static FavoriteHobby GetFirstOfTwoRecentFavoritesExtensionMethod(this Person p, IQueryable<FavoriteHobby> fh)
         {
-            return p.GetTwoRecentFavorites(fs).OrderBy(x => x.FavoriteStuffId).Take(1).Single();            
+            return p.GetTwoRecentFavoritesExtensionMethod(fh).OrderBy(x => x.FavoriteHobbyId).Take(1).Single();            
         }
+
+        
 
      
     }

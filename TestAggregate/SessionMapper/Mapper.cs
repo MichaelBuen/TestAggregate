@@ -28,7 +28,7 @@ namespace TestDdd.SessionMapper
 			mapper.AddMappings (
 				new[] { 
 					typeof(PersonMapping) ,
-					typeof(FavoriteStuffMapping)
+					typeof(FavoriteHobbiesMapping)
 				});
 
 

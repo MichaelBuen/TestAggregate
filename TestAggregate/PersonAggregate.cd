@@ -7,7 +7,7 @@
       <FileName>DomainModels\Person.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="FavoriteStuffs" />
+      <Property Name="FavoriteHobbiess" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="TestDdd.DomainModels.PersonBusinessIntelligence">
@@ -17,11 +17,11 @@
       <FileName>DomainModels\Person.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TestDdd.DomainModels.FavoriteStuff">
+  <Class Name="TestDdd.DomainModels.FavoriteHobbies">
     <Position X="3.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAIAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>DomainModels\FavoriteStuff.cs</FileName>
+      <FileName>DomainModels\FavoriteHobbies.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

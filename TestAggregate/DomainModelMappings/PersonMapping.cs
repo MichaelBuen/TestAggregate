@@ -13,8 +13,9 @@ namespace TestDdd.DomainModelMappings
 			Id (x => x.PersonId, c => c.Column("person_id"));
 			Property (x => x.FirstName, c => c.Column ("first_name"));
 			Property (x => x.LastName, c => c.Column("last_name"));
+            
 
-            Bag<FavoriteStuff>(list => list.FavoriteStuffs,
+            Bag(list => list.FavoriteHobbies,
                 rel =>
                 {
 

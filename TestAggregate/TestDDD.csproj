@@ -60,7 +60,7 @@
   <ItemGroup>
     <None Include="PersonAggregate.cd" />
     <None Include="packages.config" />
-    <None Include="person-ddl.sql" />
+    <Content Include="person-ddl.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

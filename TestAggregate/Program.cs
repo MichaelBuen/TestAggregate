@@ -10,11 +10,11 @@ namespace TestDdd
 	{
 		public static void Main (string[] args)
 		{
-            //TestAddFavoriteStuff();
+            //TestAddFavoriteHobbies();
 
-            //TestUpdateFavoriteStuff();
+            //TestUpdateFavoriteHobbies();
 
-            //TestDeleteFavoriteStuff();
+            //TestDeleteFavoriteHobbies();
 
             //TestMostFavorite();
 
@@ -42,15 +42,15 @@ namespace TestDdd
         }
 
 
-		static void TestAddFavoriteStuff()
+		static void TestAddFavoriteHobbies()
 		{
 			using (var s = SessionMapper.Mapper.SessionFactory.OpenSession()) 
 			using(var tx = s.BeginTransaction())
 			{
 				var p = s.Load<Person> (1);
 
-                var fs = new FavoriteStuff { Stuff = "xAdd : " +  DateTime.Now.ToString () };
-				p.AddFavoriteStuff (fs);                
+                var fh = new FavoriteHobby { Hobby = "xAdd : " +  DateTime.Now.ToString () };
+				p.AddFavoriteHobbies (fh);                
 
 				p.ApplyBusinessLogic (actionWhenValidated: tx.Commit);
 			}//using
@@ -58,7 +58,7 @@ namespace TestDdd
 
 		
 
-		static void TestUpdateFavoriteStuff ()
+		static void TestUpdateFavoriteHobbies ()
 		{
 
 
@@ -67,26 +67,26 @@ namespace TestDdd
             {
                 var p = s.Load<Person>(1);
 
-                //foreach (var z in p.FavoriteStuffs.OrderBy(x => x.FavoriteStuffId))
+                //foreach (var z in p.FavoriteHobbiess.OrderBy(x => x.FavoriteHobbiesId))
                 //{
-                //    Console.WriteLine("{0} {1}", z.FavoriteStuffId, z.Stuff);
+                //    Console.WriteLine("{0} {1}", z.FavoriteHobbiesId, z.Hobbies);
                 //}
 
                 // p.FirstName = p.FirstName + "X";
 
 
-                var fs = s.Load<FavoriteStuff>(9);
+                var fh = s.Load<FavoriteHobby>(9);
 
-                fs.Stuff = "Yodelex";
+                fh.Hobby = "Yodelex";
  
    
 
 
                 p.ApplyBusinessLogic(actionWhenValidated: tx.Commit);
 
-                //foreach (var z in p.FavoriteStuffs.OrderBy(x => x.FavoriteStuffId))
+                //foreach (var z in p.FavoriteHobbiess.OrderBy(x => x.FavoriteHobbiesId))
                 //{
-                //    Console.WriteLine("{0} {1}", z.FavoriteStuffId, z.Stuff);
+                //    Console.WriteLine("{0} {1}", z.FavoriteHobbiesId, z.Hobbies);
                 //}
 
 
@@ -97,7 +97,7 @@ namespace TestDdd
 
 
 
-		static void TestDeleteFavoriteStuff ()
+		static void TestDeleteFavoriteHobbies ()
 	    {
                 using (var s = SessionMapper.Mapper.SessionFactory.OpenSession())
                 using (var tx = s.BeginTransaction())
@@ -105,18 +105,14 @@ namespace TestDdd
                   
                     var p = s.Load<Person>(1);
 
-
-                    //bool isInit = NHibernate.NHibernateUtil.IsInitialized(p.FavoriteStuffs);
+                    //bool isInit = NHibernate.NHibernateUtil.IsInitialized(p.FavoriteHobbiess);
                     
-
-                    var fs = s.Load<FavoriteStuff>(32);
-
-
-                    p.DeleteFavoriteStuff(fs);
+                    var fh = s.Load<FavoriteHobby>(2);
+                    
+                    p.DeleteFavoriteHobby(fh, s.Delete);
 
                     p.ApplyBusinessLogic(actionWhenValidated: () => tx.Commit());
                     
-
                 }//using
   
 		}
@@ -130,29 +126,28 @@ namespace TestDdd
             {
                 var p = s.Load<Person>(1);
 
-
-
                 //{
-                //    p.FavoriteStuffsDirectDB = s.Query<FavoriteStuff>(); //  Person is eagerly-loaded when we access any (even the non-mapped) property on Person
-                //    // Not DDD. Every intelligence on model should be bolted to it
-                //    var fs = p.TwoRecentFavorites.OrderBy(x => x.FavoriteStuffId).Take(1).Single();
-                //    Console.WriteLine("{0} {1}", fs.FavoriteStuffId, fs.Stuff);
-                //}
-
-                
-                //{
-                //    p.FavoriteStuffsDirectDB = s.Query<FavoriteStuff>(); //  Person is eagerly-loaded when we access any (even the non-mapped) property on Person
-                //    // DDD. But not performant, as the Person model is eagerly-loaded
-                //    var fs = p.FirstOfTwoRecentFavorites;
-                //    Console.WriteLine("{0} {1}", fs.FavoriteStuffId, fs.Stuff);    
+                //    p.FavoriteHobbiessDirectDB = s.Query<FavoriteHobby>(); //  Person is eagerly-loaded when we access any (even the non-mapped) property on Person
+                //    // Not DDD. Every intelligence on model should be bolted to it, no matter how trivial the operation in it, e.g. Take(1).Single()
+                //    // Paging (Skip+Take combo) is exception to the rule, paging is not a domain model's concern, it can be addressed directly outside the domain model
+                //    var fh = p.TwoRecentFavorites.OrderBy(x => x.FavoriteHobbyId).Take(1).Single();
+                //    Console.WriteLine("{0} {1}", fh.FavoriteHobbyId, fh.Hobby);
                 //}
 
 
-                // DDD and performant.
-                var fs = p.GetFirstOfTwoRecentFavorites(s.Query<FavoriteStuff>());
+                //{
+                //    p.FavoriteHobbiessDirectDB = s.Query<FavoriteHobby>(); //  Person is eagerly-loaded when we access any (even the non-mapped) property on Person
+                //    // DDD, yet not performant, as the Person model is eagerly-loaded
+                //    var fh = p.FirstOfTwoRecentFavorites;
+                //    Console.WriteLine("{0} {1}", fh.FavoriteHobbyId, fh.Hobby);
+                //}
 
 
-                Console.WriteLine("{0} {1}", fs.FavoriteStuffId, fs.Stuff);
+                {
+                    // DDD and performant. Doesn't eagerly-load the Person
+                    var fh = p.GetFirstOfTwoRecentFavoritesExtensionMethod(s.Query<FavoriteHobby>());
+                    Console.WriteLine("{0} {1}", fh.FavoriteHobbyId, fh.Hobby);
+                }
 
             }//using
 		}
@@ -163,35 +158,57 @@ namespace TestDdd
 		static void TestFavoriteCountPragmatic ()
 		{
 			using (var s = SessionMapper.Mapper.SessionFactory.OpenSession ())
-			using (var tx = s.BeginTransaction ()) 
+			using (var tx = s.BeginTransaction ())
             {
-
-                //var count = s.Query<FavoriteStuff>().Count(x => x.Person == s.Load<Person>(1));
-                //Console.WriteLine(count);
-
                 var p = s.Load<Person>(1);
 
-                // p.FavoriteStuffsDirectDB = s.Query<FavoriteStuff>(); 
-                //var count = p.FavoriteStuffCount; // DDD, however Person is eagerly-loaded when we access any property on Person
-                //Console.WriteLine("{0}", count);
-                
-                // DDD and performant
-                var count = p.GetFavoriteStuffCountExceptFirstFromQueryable(s.Query<FavoriteStuff>());
-                Console.WriteLine("{0}", count);
-			}
+
+                //{
+                //    // Performant, yet not DDD.
+                //    var count = s.Query<FavoriteHobby>().Count(x => x.Person == p);
+                //    Console.WriteLine(count);
+                //}
+
+
+
+                //{
+                //    // DDD, yet not performant. Person is eagerly-loaded when we access any property/method on Person. 
+                //    p.FavoriteHobbiessDirectDB = s.Query<FavoriteHobby>();
+                //    var count = p.FavoriteHobbiesCount;
+                //    // Not future-proof, we cannot count selectively
+                //    Console.WriteLine("Count: {0}", count);
+                //}
+
+
+                //{
+                //     //Future-proof, we can count selectively on queryable.
+                //     //DDD, yet not performant. Person is still eagerly-loaded when we access any property/method on Person.
+                //    var count = p.GetFavoriteActiveHobbiesCountFromQueryable(s.Query<FavoriteHobby>());
+                //    Console.WriteLine("Count: {0}", count);
+                //}
+
+
+                {
+                    //DDD and performant. Person is not eagerly-loaded anymore, as we didn't touch any of the properties or methods of the Person model.
+                    //The technique is to use extension method
+                    var count = p.GetFavoriteActiveHobbiesCountFromQueryableExtensionMethod(s.Query<FavoriteHobby>());
+                    Console.WriteLine("{0}", count); 
+                }
+            }
 		}
 
         static void TestListMostFavorite()
         {
-            using (var s = SessionMapper.Mapper.SessionFactory.OpenSession ())
+            using (var s = SessionMapper.Mapper.SessionFactory.OpenSession())
             using (var tx = s.BeginTransaction())
             {
                 var p = s.Load<Person>(1);
-                var fsList = p.GetTwoRecentFavorites(s.Query<FavoriteStuff>());
+                var fsList = p.GetTwoRecentFavoritesExtensionMethod(s.Query<FavoriteHobby>());
 
+                Console.WriteLine("Two Recent Favorites");
                 foreach (var item in fsList)
                 {
-                    Console.WriteLine("{0} {1}", item.FavoriteStuffId, item.Stuff);
+                    Console.WriteLine("{0} {1}", item.FavoriteHobbyId, item.Hobby);
                 }
             }
         }
