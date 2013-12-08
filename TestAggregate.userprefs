@@ -1,15 +1,27 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="TestAggregate/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TestAggregate/DomainModels/Person.cs">
     <Files>
-      <File FileName="TestAggregate/Program.cs" Line="85" Column="241" />
       <File FileName="TestAggregate/DomainModels.cs" Line="1" Column="1" />
-      <File FileName="TestAggregate/DomainModels/Person.cs" Line="1" Column="1" />
-      <File FileName="TestAggregate/DomainModelMappings/PersonMapping.cs" Line="1" Column="1" />
+      <File FileName="TestAggregate/DomainModelMappings/PersonMapping.cs" Line="19" Column="6" />
       <File FileName="TestAggregate/SessionMapper/Mapper.cs" Line="1" Column="1" />
       <File FileName="TestAggregate/DomainModels/FavoriteStuff.cs" Line="1" Column="1" />
       <File FileName="TestAggregate/DomainModelMappings/FavoriteStuffMapping.cs" Line="1" Column="1" />
+      <File FileName="TestAggregate/DomainModels/Person.cs" Line="1" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="TestDDD" expanded="True">
+            <Node name="DomainModelMappings" expanded="True" />
+            <Node name="DomainModels" expanded="True">
+              <Node name="Person.cs" selected="True" />
+            </Node>
+            <Node name="Properties" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
