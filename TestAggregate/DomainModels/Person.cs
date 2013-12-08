@@ -128,7 +128,7 @@ namespace TestDdd.DomainModels
 
 
         // But really it's better to use IQueryable than using Extra+Lazy.
-        // We can't be a DDD purist for far too long when need our code to be performant.
+        // We can't be a DDD purist for far too long when we need our code to be performant.
         // Example, it is more efficient to add a condition to IQueryable than to a condition on IList; 
         // all IList elements shall be eagerly-loaded when adding a condition on it.
         // So use IQueryable.
