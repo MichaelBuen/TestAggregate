@@ -17,11 +17,11 @@ namespace TestDdd.DomainModelMappings
 				c.Column ("favorite_stuff_id");
 				c.Generator(Generators.Sequence, m => m.Params(new { sequence = "favorite_stuff_favorite_stuff_id_seq"}));
 			});
+
 			ManyToOne (x => x.Person, c => {
 				c.Column ("person_id");
-				//c.Cascade(Cascade.ReAttach);
-
-
+				
+                    
 			});
 			Property (x => x.Stuff, c => c.Column ("stuff"));
 

@@ -11,7 +11,7 @@ insert into person(first_name, last_name) values
 
 
 
-drop table favorite_stuff;
+-- drop table favorite_stuff;
 create table favorite_stuff
 (
 	person_id int not null references person(person_id),
@@ -21,9 +21,8 @@ create table favorite_stuff
 );
 
 
-insert into favorite_stuff(person_id, stuff) values(1, 'aaa')
+insert into favorite_stuff(person_id, stuff) values(1, 'aaa');
 
 
-select * from person
-select * from favorite_stuff
-
+select * from person;
+select * from favorite_stuff order by favorite_stuff_id

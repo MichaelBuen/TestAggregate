@@ -10,22 +10,22 @@ namespace TestDdd
 	{
 		public static void Main (string[] args)
 		{
-			TestAddFavoriteStuff ();
+            //TestAddFavoriteStuff();
 
-			TestUpdateFavoriteStuffInefficient ();
-			TestUpdateFavoriteStuffEfficient ();
+            //TestUpdateFavoriteStuff();
 
-			TestDeleteFavoriteStuffInefficient ();
-			TestDeleteFavoriteStuffEfficient ();
+            //TestDeleteFavoriteStuff();
 
-			TestMostFavoriteInefficient ();
-			TestMostFavoriteEfficient ();
+            //TestMostFavorite();
 
+            //TestFavoriteCountPragmatic();
 
-			TestFavoriteCountPuristEfficient ();
-			TestFavoriteCountPragmaticEfficient ();
+            TestListMostFavorite();
 
-		}//Main
+            Console.ReadKey();
+
+		}
+
 
 		static void TestAddFavoriteStuff()
 		{
@@ -34,113 +34,196 @@ namespace TestDdd
 			{
 				var p = s.Load<Person> (1);
 
-				p.AddFavoriteStuff (new FavoriteStuff { Stuff = DateTime.Now.ToString () });
+                var fs = new FavoriteStuff { Stuff = "xAdd : " +  DateTime.Now.ToString () };
+				p.AddFavoriteStuff (fs);
+                // s.Persist(fs);
 
 				p.ApplyBusinessLogic (actionWhenValidated: tx.Commit);
 			}//using
 		}
 
-		static void TestUpdateFavoriteStuffInefficient ()
+		
+
+		static void TestUpdateFavoriteStuff ()
 		{
-			using (var s = SessionMapper.Mapper.SessionFactory.OpenSession()) 
-			using(var tx = s.BeginTransaction())
-			{
-				var p = s.Load<Person> (1);
-
-				p.UpdateFavoriteStuffInefficient (57, stuff: DateTime.Now.ToString ());
-
-				p.ApplyBusinessLogic (actionWhenValidated: tx.Commit);
-			}//using
-		}
-
-		static void TestUpdateFavoriteStuffEfficient ()
-		{
-			using (var s = SessionMapper.Mapper.SessionFactory.OpenSession()) 
-			using(var tx = s.BeginTransaction())
-			{
-				var p = s.Load<Person> (1);
-
-				var fs = s.Load<FavoriteStuff> (57);
-				p.UpdateFavoriteStuffEfficient (fs, stuff: DateTime.Now.ToString ());
-
-				p.ApplyBusinessLogic (actionWhenValidated: tx.Commit);
-			}//using
-		}
 
 
+            using (var s = SessionMapper.Mapper.SessionFactory.OpenSession())
+            using (var tx = s.BeginTransaction())
+            {
+                var p = s.Load<Person>(1);
 
-		static void TestDeleteFavoriteStuffInefficient ()
-		{
-			using (var s = SessionMapper.Mapper.SessionFactory.OpenSession()) 
-			using(var tx = s.BeginTransaction())
-			{
-				var p = s.Load<Person> (1);
+                //foreach (var z in p.FavoriteStuffs.OrderBy(x => x.FavoriteStuffId))
+                //{
+                //    Console.WriteLine("{0} {1}", z.FavoriteStuffId, z.Stuff);
+                //}
 
-				p.DeleteFavoriteStuffInefficient (68);
-
-				p.ApplyBusinessLogic (actionWhenValidated: tx.Commit);
-			}//using
-		}
-
-		static void TestDeleteFavoriteStuffEfficient ()
-		{
-			using (var s = SessionMapper.Mapper.SessionFactory.OpenSession()) 
-			using(var tx = s.BeginTransaction())
-			{
-				var p = s.Load<Person> (1);
-
-				var fs = s.Load<FavoriteStuff> (70);
-				p.DeleteFavoriteStuffEfficient (fs, s.Delete);
-
-				p.ApplyBusinessLogic (actionWhenValidated: tx.Commit);
-			}//using
-		}
+                // p.FirstName = p.FirstName + "X";
 
 
-		static void TestMostFavoriteInefficient ()
-		{
-			using (var s = SessionMapper.Mapper.SessionFactory.OpenSession()) 
-			using(var tx = s.BeginTransaction())
-			{
-				var p = s.Load<Person> (1);
+                var fs = s.Load<FavoriteStuff>(9);
 
-				var fs = p.MostFavoriteInefficient;
+                fs.Stuff = "Yodelex";
+ 
+   
 
-			}//using
-		}
 
-		static void TestMostFavoriteEfficient ()
-		{
-			using (var s = SessionMapper.Mapper.SessionFactory.OpenSession()) 
-			using(var tx = s.BeginTransaction())
-			{
-				var p = s.Load<Person> (1);
+                p.ApplyBusinessLogic(actionWhenValidated: tx.Commit);
 
-				var fs = p.GetMostFavoriteEfficient (s.Query<FavoriteStuff> ());
+                //foreach (var z in p.FavoriteStuffs.OrderBy(x => x.FavoriteStuffId))
+                //{
+                //    Console.WriteLine("{0} {1}", z.FavoriteStuffId, z.Stuff);
+                //}
 
-			}//using
+
+            }//using
+    
 		}
 
 
 
-		static void TestFavoriteCountPuristEfficient ()
+
+		static void TestDeleteFavoriteStuff ()
+	    {
+                using (var s = SessionMapper.Mapper.SessionFactory.OpenSession())
+                using (var tx = s.BeginTransaction())
+                {
+                    //var px = s.Load<Person>(1);
+
+
+
+                    //var fsd = s.Load<FavoriteStuff>(22);
+                    //s.Delete(fsd);
+
+
+                    //tx.Commit();
+
+
+                    //foreach (var ix in px.FavoriteStuffs.OrderBy(x => x.FavoriteStuffId))
+                    //{
+                    //    Console.WriteLine("{0} {1}", ix.FavoriteStuffId, ix.Stuff);
+                    //}
+
+
+
+
+                    //return;
+                    var p = s.Load<Person>(1);
+
+
+                    //bool isInit = NHibernate.NHibernateUtil.IsInitialized(p.FavoriteStuffs);
+                    //Console.WriteLine("Is Init {0}", isInit);
+                    ////foreach (var z in p.FavoriteStuffs.OrderBy(x => x.FavoriteStuffId))
+                    ////{
+                    ////    Console.WriteLine("{0} {1}", z.FavoriteStuffId, z.Stuff);
+                    ////}
+                    //isInit = NHibernate.NHibernateUtil.IsInitialized(p.FavoriteStuffs);
+                    //Console.WriteLine("Is Init {0}", isInit);
+
+
+                    var fs = s.Load<FavoriteStuff>(32);
+
+
+                    p.DeleteFavoriteStuffEfficient(fs);
+
+
+                    
+
+                    //foreach (var z in p.FavoriteStuffs.OrderBy(x => x.FavoriteStuffId))
+                    //{
+                    //    Console.WriteLine("{0} {1}", z.FavoriteStuffId, z.Stuff);
+                    //}
+
+                    // isInit = NHibernate.NHibernateUtil.IsInitialized(p.FavoriteStuffs);
+                    //Console.WriteLine("Is Init {0}", isInit);
+
+                    
+                    //p.ApplyBusinessLogic(actionWhenValidated: () => tx.Commit(), checkInitialized: NHibernate.NHibernateUtil.IsInitialized, deleter: s.Delete);
+                    tx.Commit();
+
+                    //foreach (var z in p.FavoriteStuffs.OrderBy(x => x.FavoriteStuffId))
+                    //{
+                    //    Console.WriteLine("{0} {1}", z.FavoriteStuffId, z.Stuff);
+                    //}
+
+                }//using
+  
+		}
+
+
+
+		static void TestMostFavorite ()
+		{
+			using (var s = SessionMapper.Mapper.SessionFactory.OpenSession()) 
+			using(var tx = s.BeginTransaction())
+            {
+                var p = s.Load<Person>(1);
+
+
+
+                //{
+                //    p.FavoriteStuffsDirectDB = s.Query<FavoriteStuff>(); //  Person is eagerly-loaded when we access any (even the non-mapped) property on Person
+                //    // Not DDD. Every intelligence on model should be bolted to it
+                //    var fs = p.TwoRecentFavorites.OrderBy(x => x.FavoriteStuffId).Take(1).Single();
+                //    Console.WriteLine("{0} {1}", fs.FavoriteStuffId, fs.Stuff);
+                //}
+
+                
+                //{
+                //    p.FavoriteStuffsDirectDB = s.Query<FavoriteStuff>(); //  Person is eagerly-loaded when we access any (even the non-mapped) property on Person
+                //    // DDD. But not performant, as the Person model is eagerly-loaded
+                //    var fs = p.FirstOfTwoRecentFavorites;
+                //    Console.WriteLine("{0} {1}", fs.FavoriteStuffId, fs.Stuff);    
+                //}
+
+
+                // DDD and performant.
+                var fs = p.GetFirstOfTwoRecentFavorites(s.Query<FavoriteStuff>());
+
+
+                Console.WriteLine("{0} {1}", fs.FavoriteStuffId, fs.Stuff);
+
+            }//using
+		}
+
+
+
+		
+		static void TestFavoriteCountPragmatic ()
 		{
 			using (var s = SessionMapper.Mapper.SessionFactory.OpenSession ())
-			using (var tx = s.BeginTransaction ()) {
-				var p = s.Load<Person> (1);
-				var c = p.FavoriteStuffCount;
-				Console.WriteLine ("{0}", c);
+			using (var tx = s.BeginTransaction ()) 
+            {
+
+                //var count = s.Query<FavoriteStuff>().Count(x => x.Person == s.Load<Person>(1));
+                //Console.WriteLine(count);
+
+                var p = s.Load<Person>(1);
+
+                // p.FavoriteStuffsDirectDB = s.Query<FavoriteStuff>(); 
+                //var count = p.FavoriteStuffCount; // DDD, however Person is eagerly-loaded when we access any property on Person
+                //Console.WriteLine("{0}", count);
+                
+                // DDD and performant
+                var count = p.GetFavoriteStuffCountExceptFirstFromQueryable(s.Query<FavoriteStuff>());
+                Console.WriteLine("{0}", count);
 			}
 		}
 
-		static void TestFavoriteCountPragmaticEfficient ()
-		{
-			using (var s = SessionMapper.Mapper.SessionFactory.OpenSession ())
-			using (var tx = s.BeginTransaction ()) {
-				var p = s.Load<Person> (1);
-				var c = p.GetFavoriteStuffCount (s.Query<FavoriteStuff> ());
-				Console.WriteLine ("{0}", c);
-			}
-		}
+        static void TestListMostFavorite()
+        {
+            using (var s = SessionMapper.Mapper.SessionFactory.OpenSession ())
+            using (var tx = s.BeginTransaction())
+            {
+                var p = s.Load<Person>(1);
+                var fsList = p.GetTwoRecentFavorites(s.Query<FavoriteStuff>());
+
+                foreach (var item in fsList)
+                {
+                    Console.WriteLine("{0} {1}", item.FavoriteStuffId, item.Stuff);
+                }
+            }
+        }
+
 	}//MainClass
 }

@@ -1,0 +1,14 @@
+C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\obj\x86\Debug\TestAggregate.exe
+C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\bin\Debug\TestAggregate.exe
+C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\bin\Debug\TestAggregate.pdb
+C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\bin\Debug\Iesi.Collections.dll
+C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\bin\Debug\Mono.Security.dll
+C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\bin\Debug\NHibernate.dll
+C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\bin\Debug\Npgsql.dll
+C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\bin\Debug\policy.2.0.Npgsql.dll
+C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\bin\Debug\Iesi.Collections.xml
+C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\bin\Debug\NHibernate.xml
+C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\bin\Debug\Npgsql.pdb
+C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\bin\Debug\Npgsql.xml
+C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\bin\Debug\policy.2.0.Npgsql.config
+C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\obj\x86\Debug\TestAggregate.pdb
