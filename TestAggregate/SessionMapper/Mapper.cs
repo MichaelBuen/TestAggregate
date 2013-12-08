@@ -28,7 +28,7 @@ namespace TestDdd.SessionMapper
 			mapper.AddMappings (
 				new[] { 
 					typeof(PersonMapping) ,
-					typeof(FavoriteStuffMapping)
+					typeof(FavoriteHobbiesMapping)
 				});
 
 
@@ -37,7 +37,7 @@ namespace TestDdd.SessionMapper
 			cfg.DataBaseIntegration (c => {
 				c.Driver<NHibernate.Driver.NpgsqlDriver>();
 				c.Dialect<NHibernate.Dialect.PostgreSQLDialect>();
-				c.ConnectionString = "Server=localhost; Database=test_aggregate; User=postgres; password=opensesame93; Port=5433";
+				c.ConnectionString = "Server=localhost; Database=test_aggregate; User=postgres; password=opensesame93; Port=5432";
 
 				c.LogFormattedSql = true;
 				c.LogSqlInConsole = true;

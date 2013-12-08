@@ -13,25 +13,37 @@ namespace TestDdd.DomainModelMappings
 			Id (x => x.PersonId, c => c.Column("person_id"));
 			Property (x => x.FirstName, c => c.Column ("first_name"));
 			Property (x => x.LastName, c => c.Column("last_name"));
+            
 
-			Bag<FavoriteStuff> (list => list.FavoriteStuffs, 
-				rel => {
+            Bag(list => list.FavoriteHobbies,
+                rel =>
+                {
 
-					rel.Key (k => {
-						k.Column ("person_id");
-						k.NotNullable(true);
-					}); // id of child table
-					
-					rel.Inverse(true); // makes the parent handle the childlist
+                    rel.Key(k =>
+                    {
+                        k.Column("person_id");
+                        k.NotNullable(true);
+                        
+                    }); // id of child table
 
-					// rel.Cascade(cascadeStyle: NHibernate.Mapping.ByCode.Cascade.Persist);
+                    rel.Inverse(true); // makes the parent handle the childlist
 
-					rel.Cascade(NHibernate.Mapping.ByCode.Cascade.All | NHibernate.Mapping.ByCode.Cascade.DeleteOrphans);
 
-//					rel.Cascade(cascadeStyle: NHibernate.Mapping.ByCode.Cascade.All);
-					rel.Lazy(NHibernate.Mapping.ByCode.CollectionLazy.Extra | NHibernate.Mapping.ByCode.CollectionLazy.Lazy);
-				}, 
-				relType => relType.OneToMany ());
+                    rel.Cascade(NHibernate.Mapping.ByCode.Cascade.Persist | NHibernate.Mapping.ByCode.Cascade.DeleteOrphans);
+
+
+                    rel.Lazy(NHibernate.Mapping.ByCode.CollectionLazy.Extra | NHibernate.Mapping.ByCode.CollectionLazy.Lazy);
+
+                    // rel.Fetch(NHibernate.Mapping.ByCode.CollectionFetchMode.Select);
+
+                    
+
+                },
+                relType =>
+                {
+                    relType.OneToMany();
+                    
+                });
 
 		}
 	}

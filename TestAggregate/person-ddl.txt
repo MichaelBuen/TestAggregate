@@ -1,0 +1,37 @@
+﻿/*
+drop table favorite_hobby;
+drop table person;
+*/
+
+create table person
+(
+	person_id serial primary key,
+	first_name text not null,
+	last_name text not null
+);
+
+
+insert into person(first_name, last_name) values
+('John','Lennon');
+
+
+
+
+create table favorite_hobby
+(
+	person_id int not null references person(person_id),
+
+	favorite_hobby_id serial primary key,
+	hobby text not null,
+	is_active boolean not null default true 
+);
+
+
+insert into favorite_hobby(person_id, hobby) 
+select 1, 'H' || x.h::text from generate_series(1, 10) as x(h);
+
+
+update favorite_hobby set is_active = false where favorite_hobby_id = 1;
+
+select * from person;
+select * from favorite_hobby order by favorite_hobby_id

@@ -1,0 +1,185 @@
+You wanted to get the count of the person's hobbies and you wanted your code to be performant.
+
+public class Person
+{
+	public virtual int PersonId { get; set; }
+	
+	public virtual string Name { get; set; }
+	
+	public virtual IList<Hobby> Hobbies { get; set; }
+}
+
+
+This is not DDD. DDD must encapsulate, if we access Hobbies count directly we "can't" add any further condition(say only count the active hobbies) on it and expect the code to be performant, see further comments below.
+
+
+	var p = session.Load<Person>(1);
+	Console.WriteLine("Count: {0}", p.Hobbies.Count());
+
+
+This is DDD, intelligence are encapsulated by the domain model. And this is also performant, the list is not eagerly-loaded, the count is performed directly by the database
+
+	public virtual int FavoriteHobbiesCount
+	{
+		get
+		{
+			// Thanks Extra Lazy! This is on PersonMapping
+			// rel.Lazy(NHibernate.Mapping.ByCode.CollectionLazy.Extra | NHibernate.Mapping.ByCode.CollectionLazy.Lazy);
+
+			return this.Hobbies.Count();
+		}
+	}
+	
+	// On Main()
+	var p = session.Load<Person>(1);
+	var count = p.FavoriteHobbiesCount;
+    Console.WriteLine("Count: {0}", count);	
+	
+Output:
+
+NHibernate:
+    SELECT
+        person0_.person_id as person1_0_0_,
+        person0_.first_name as first2_0_0_,
+        person0_.last_name as last3_0_0_
+    FROM
+        person person0_
+    WHERE
+        person0_.person_id=:p0;
+    :p0 = 1 [Type: Int32 (0)]
+NHibernate:
+    SELECT
+        count(favorite_hobby_id)
+    FROM
+        favorite_hobby
+    WHERE
+        person_id=:p0;
+    :p0 = 1 [Type: Int32 (0)]
+Count: 10
+
+	
+	
+
+https://twitter.com/migueldeicaza/status/11164701654
+	
+However, that code is not future-proof, Extra+Lazy won't work efficiently when you add a condition on the list. i.e., the collection will be eagerly-loaded when you add a condition on it.
+
+	public virtual int FavoriteHobbiesCount
+	{
+		get
+		{
+			// Thanks Extra Lazy! This is on PersonMapping
+			// rel.Lazy(NHibernate.Mapping.ByCode.CollectionLazy.Extra | NHibernate.Mapping.ByCode.CollectionLazy.Lazy);
+
+			return this.Hobbies.Count(x => x.IsActive); // Hobbies' items will be eagerly-loaded when we add a condition on its Count
+		}
+	}
+	
+	// On Main()
+	var p = session.Load<Person>(1);
+	var count = p.FavoriteHobbiesCount;
+    Console.WriteLine("Count: {0}", count);	
+
+Output:	
+
+NHibernate:
+    SELECT
+        person0_.person_id as person1_0_0_,
+        person0_.first_name as first2_0_0_,
+        person0_.last_name as last3_0_0_
+    FROM
+        person person0_
+    WHERE
+        person0_.person_id=:p0;
+    :p0 = 1 [Type: Int32 (0)]
+NHibernate:
+    SELECT
+        favoriteho0_.person_id as person2_1_,
+        favoriteho0_.favorite_hobby_id as favorite1_1_,
+        favoriteho0_.favorite_hobby_id as favorite1_1_0_,
+        favoriteho0_.person_id as person2_1_0_,
+        favoriteho0_.hobby as hobby1_0_,
+        favoriteho0_.is_active as is4_1_0_
+    FROM
+        favorite_hobby favoriteho0_
+    WHERE
+        favoriteho0_.person_id=:p0;
+    :p0 = 1 [Type: Int32 (0)]
+Count: 9	
+	
+	
+To fix the slow performance, we must directly query the database. Pass an IQueryable to Person:
+
+	public virtual int GetFavoriteActiveHobbiesCountFromQueryable(IQueryable<FavoriteHobby> fh)
+    {            
+		return fh.Count(x => x.Person == this && x.IsActive);            
+    }
+
+	
+	// On Main()
+	var p = session.Load<Person>(1);
+	var count = p.GetFavoriteActiveHobbiesCountFromQueryable(s.Query<FavoriteHobby>()); 
+    Console.WriteLine("Count: {0}", count);	
+
+	
+Output:
+
+NHibernate:
+    SELECT
+        person0_.person_id as person1_0_0_,
+        person0_.first_name as first2_0_0_,
+        person0_.last_name as last3_0_0_
+    FROM
+        person person0_
+    WHERE
+        person0_.person_id=:p0;
+    :p0 = 1 [Type: Int32 (0)]
+NHibernate:
+    select
+        cast(count(*) as int4) as col_0_0_
+    from
+        favorite_hobby favoriteho0_
+    where
+        favoriteho0_.person_id=:p0
+        and favoriteho0_.is_active=TRUE;
+    :p0 = 1 [Type: Int32 (0)]
+Count: 9
+
+
+However, you'll notice that even we don't access any of the property of Person, the Person model is still eagerly-loaded from database. NHibernate will eagerly-load the model when we access any of its properties/methods, regardless of being mapped or unmapped.
+
+
+To really fix that slow performance, move the model's behavior to extension method:
+	
+
+public static class PersonBusinessIntelligence
+{
+	public static int GetFavoriteActiveHobbiesCountFromQueryableExtensionMethod(this Person p, IQueryable<FavoriteHobby> fh)
+	{            
+		Console.WriteLine("Extension method version");
+		return fh.Count(x => x.Person == p && x.IsActive);
+	}
+}
+
+
+// On Main()
+var p = session.Load<Person>(1);
+var count = p.GetFavoriteActiveHobbiesCountFromQueryableExtensionMethod(s.Query<FavoriteHobby>()); 
+Console.WriteLine("Count: {0}", count);
+
+Output:
+
+Extension method version
+NHibernate:
+    select
+        cast(count(*) as int4) as col_0_0_
+    from
+        favorite_hobby favoriteho0_
+    where
+        favoriteho0_.person_id=:p0
+        and favoriteho0_.is_active=TRUE;
+    :p0 = 1 [Type: Int32 (0)]
+Count: 9
+
+
+

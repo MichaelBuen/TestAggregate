@@ -7,23 +7,25 @@ using NHibernate.Mapping.ByCode;
 
 namespace TestDdd.DomainModelMappings
 {
-	public class FavoriteStuffMapping : ClassMapping<FavoriteStuff>
+	public class FavoriteHobbiesMapping : ClassMapping<FavoriteHobby>
 	{
-		public FavoriteStuffMapping ()
+		public FavoriteHobbiesMapping ()
 		{
-			// http://stackoverflow.com/questions/15254051/nhibernate-mapping-by-code-conventions-to-postgres-sequence
-			Table ("favorite_stuff");
-			Id (x => x.FavoriteStuffId, c => {
-				c.Column ("favorite_stuff_id");
-				c.Generator(Generators.Sequence, m => m.Params(new { sequence = "favorite_stuff_favorite_stuff_id_seq"}));
-			});
-			ManyToOne (x => x.Person, c => {
-				c.Column ("person_id");
-				//c.Cascade(Cascade.ReAttach);
+            // Placing the Person reference on top, emphasizes that the FavoriteHobby cannot exist out of the Person's aggregate
+            ManyToOne(x => x.Person, c => c.Column("person_id"));
 
 
+			// http://stackoverflow.com/questions/15254051/nhibernate-mapping-by-code-conventions-to-postgres-sequence			
+            Table ("favorite_hobby");
+
+			Id (x => x.FavoriteHobbyId, c => {
+				c.Column ("favorite_hobby_id");
+				c.Generator(Generators.Sequence, m => m.Params(new { sequence = "favorite_hobby_favorite_hobby_id_seq"}));
 			});
-			Property (x => x.Stuff, c => c.Column ("stuff"));
+
+
+			Property (x => x.Hobby, c => c.Column ("hobby"));
+            Property(x => x.IsActive, c => c.Column("is_active"));
 
 
 		}
