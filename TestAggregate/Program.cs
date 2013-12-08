@@ -14,7 +14,7 @@ namespace TestDdd
 
             //TestUpdateFavoriteHobbies();
 
-            //TestDeleteFavoriteHobbies();
+            TestDeleteFavoriteHobbies();
 
             //TestMostFavorite();
 
@@ -22,7 +22,7 @@ namespace TestDdd
 
             //TestListMostFavorite();
 
-            TestEagerLoad();
+            //TestEagerLoad();
 
             Console.ReadKey();
 
@@ -108,8 +108,16 @@ namespace TestDdd
 
                     //bool isInit = NHibernate.NHibernateUtil.IsInitialized(p.FavoriteHobbiess);
                     
-                    var fh = s.Load<FavoriteHobby>(17);
+                    var fh = s.Load<FavoriteHobby>(23);
+
+                    // If you know that a collection has no further collection, it's better to optimize the delete...
                     p.DeleteFavoriteHobby(fh, () => s.Delete(new FavoriteHobby { FavoriteHobbyId = fh.FavoriteHobbyId }));
+
+                    //// ...otherwise, delete it via object, so delete can be cascaded:
+                    //p.DeleteFavoriteHobby(fh, () => s.Delete(fh));
+
+                    //// ...or if the FavoriteHobby list is already eagerly-loaded, delete it from the collection
+                    //p.DeleteFavoriteHobby(fh);
 
                     // p.DeleteFavoriteHobby(fh); eager-loads both Person and FavoriteHobby
 
