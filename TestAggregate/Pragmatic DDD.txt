@@ -162,6 +162,7 @@ public static class PersonBusinessIntelligence
 
 
 // On Main()
+var p = session.Load<Person>(1);
 var count = p.GetFavoriteActiveHobbiesCountFromQueryableExtensionMethod(s.Query<FavoriteHobby>()); 
 Console.WriteLine("Count: {0}", count);
 
