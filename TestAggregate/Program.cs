@@ -14,7 +14,7 @@ namespace TestDdd
 
             //TestUpdateFavoriteHobbies();
 
-            TestDeleteFavoriteHobbies();
+            //TestDeleteFavoriteHobbies();
 
             //TestMostFavorite();
 
@@ -22,7 +22,7 @@ namespace TestDdd
 
             //TestListMostFavorite();
 
-            //TestEagerLoad();
+            TestEagerLoad();
 
             Console.ReadKey();
 
