@@ -147,7 +147,7 @@ namespace TestDdd.DomainModels
     // It's better to use an extension method than have the Person model contain the IQueryables.
     // A mere accessing of property inside a Person will eager-load the Person
     // Static method won't eager-load the Person
-    public static class PersonBusinessLogic
+    public static class PersonBusinessIntelligence
     {        
         public static int GetFavoriteStuffCountExceptFirstFromQueryable(this Person p, IQueryable<FavoriteStuff> fs)
         {

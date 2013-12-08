@@ -10,7 +10,7 @@
       <Property Name="FavoriteStuffs" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="TestDdd.DomainModels.PersonBusinessLogic">
+  <Class Name="TestDdd.DomainModels.PersonBusinessIntelligence">
     <Position X="7" Y="5.25" Width="4" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAABAAAAAAQAAAAQAAAAAAAAAAAAAA=</HashCode>

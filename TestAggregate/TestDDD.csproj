@@ -58,7 +58,7 @@
     <Compile Include="DomainModelMappings\FavoriteStuffMapping.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="PersonAggregate.cd" />
     <None Include="packages.config" />
     <None Include="person-ddl.sql" />
   </ItemGroup>
