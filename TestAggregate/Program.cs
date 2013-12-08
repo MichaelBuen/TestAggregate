@@ -20,11 +20,26 @@ namespace TestDdd
 
             //TestFavoriteCountPragmatic();
 
-            TestListMostFavorite();
+            //TestListMostFavorite();
+
+            TestEagerLoad();
 
             Console.ReadKey();
 
 		}
+
+        private static void TestEagerLoad()
+        {
+            using (var s = SessionMapper.Mapper.SessionFactory.OpenSession())
+            using (var tx = s.BeginTransaction())
+            {
+                var p = s.Load<Person>(1);
+
+                p.AccessingAnyMethodOrPropertyOfTheModelWillEagerLoadTheModel();
+
+                p.ApplyBusinessLogic(tx.Commit);
+            }
+        }
 
 
 		static void TestAddFavoriteStuff()

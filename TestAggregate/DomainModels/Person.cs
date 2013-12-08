@@ -30,6 +30,12 @@ namespace TestDdd.DomainModels
         public virtual IQueryable<FavoriteStuff> FavoriteStuffsDirectDB { get; set; }
 
 
+        public virtual void AccessingAnyMethodOrPropertyOfTheModelWillEagerLoadTheModel()
+        {
+
+        }
+
+
 		public virtual void ApplyBusinessLogic(Action actionWhenValidated)
 		{
 			// Business Logic / Validation goes here
