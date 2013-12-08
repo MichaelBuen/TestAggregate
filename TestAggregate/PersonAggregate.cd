@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="TestDdd.DomainModels.Person">
-    <Position X="6.75" Y="1" Width="1.5" />
+    <Position X="6.75" Y="1" Width="4.25" />
     <TypeIdentifier>
       <HashCode>AABAAEAACAAAQAAEAAAAAAQAIAAACQCEAAAIAAEAAEg=</HashCode>
       <FileName>DomainModels\Person.cs</FileName>
@@ -11,7 +11,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="TestDdd.DomainModels.PersonBusinessLogic">
-    <Position X="6.5" Y="5.25" Width="2.25" />
+    <Position X="7" Y="5.25" Width="4" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAABAAAAAAQAAAAQAAAAAAAAAAAAAA=</HashCode>
       <FileName>DomainModels\Person.cs</FileName>
