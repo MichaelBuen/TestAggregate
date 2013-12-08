@@ -70,7 +70,7 @@ However, that code is not future-proof, Extra+Lazy won't work efficiently when y
 			// Thanks Extra Lazy! This is on PersonMapping
 			// rel.Lazy(NHibernate.Mapping.ByCode.CollectionLazy.Extra | NHibernate.Mapping.ByCode.CollectionLazy.Lazy);
 
-			return this.Hobbies.Count(x => x.IsActive);
+			return this.Hobbies.Count(x => x.IsActive); // Hobbies' items will be eagerly-loaded when we add a condition on its Count
 		}
 	}
 	

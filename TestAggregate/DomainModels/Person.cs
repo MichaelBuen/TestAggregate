@@ -107,8 +107,8 @@ namespace TestDdd.DomainModels
         {
             get
             {
-                // Except first
-                return this.FavoriteHobbiessDirectDB.Count(x => x.Person == this && x.IsActive);
+                // Only the actives
+                return this.FavoriteHobbiessDirectDB.Count(x => x.Person == this && x.IsActive); // Hobbies' items will be eagerly-loaded when we add a condition on its Count
             }
         }
 

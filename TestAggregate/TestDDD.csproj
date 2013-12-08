@@ -58,6 +58,7 @@
     <Compile Include="DomainModelMappings\FavoriteStuffMapping.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Pragmatic DDD.txt" />
     <None Include="PersonAggregate.cd" />
     <None Include="packages.config" />
     <Content Include="person-ddl.txt" />
