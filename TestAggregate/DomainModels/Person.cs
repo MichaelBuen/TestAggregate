@@ -75,9 +75,10 @@ namespace TestDdd.DomainModels
         {
             get
             {
-                // Thanks Extra+Lazy! Check this on PersonMapping
-                // rel.Lazy(NHibernate.Mapping.ByCode.CollectionLazy.Extra | NHibernate.Mapping.ByCode.CollectionLazy.Lazy);
+                // Thanks Extra+Lazy! This is on PersonMapping:
+                //    rel.Lazy(NHibernate.Mapping.ByCode.CollectionLazy.Extra | NHibernate.Mapping.ByCode.CollectionLazy.Lazy);
 
+                // With Extra+Lazy, counting will be performed at the database-side instead of counting the in-memory objects
                 return this.FavoriteHobbies.Count();
             }
         }

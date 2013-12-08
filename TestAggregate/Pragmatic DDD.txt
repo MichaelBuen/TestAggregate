@@ -23,9 +23,10 @@ This is DDD, intelligence are encapsulated by the domain model. And this is also
 	{
 		get
 		{
-			// Thanks Extra Lazy! This is on PersonMapping
-			// rel.Lazy(NHibernate.Mapping.ByCode.CollectionLazy.Extra | NHibernate.Mapping.ByCode.CollectionLazy.Lazy);
+			// Thanks Extra+Lazy! This is on PersonMapping:
+            //    rel.Lazy(NHibernate.Mapping.ByCode.CollectionLazy.Extra | NHibernate.Mapping.ByCode.CollectionLazy.Lazy);
 
+            // With Extra+Lazy, counting will be performed at the database-side instead of counting the in-memory objects
 			return this.Hobbies.Count();
 		}
 	}
