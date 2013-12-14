@@ -18,15 +18,55 @@ namespace TestDdd
 
             //TestMostFavorite();
 
-            //TestFavoriteCountPragmatic();
+            // TestFavoriteCountPragmatic();
 
             //TestListMostFavorite();
 
-            TestEagerLoad();
+            //TestEagerLoad();
+
+            // TestList();
+
+            TestAddPerson();
 
             Console.ReadKey();
 
 		}
+
+        private static void TestAddPerson()
+        {
+            // This will get an error
+
+            // We need repository here. Or maybe not, NHibernate already look like a repository 
+            using (var s = SessionMapper.Mapper.SessionFactory.OpenSession())
+            using (var tx = s.BeginTransaction())
+            {
+                var p = new Person();
+                // p.FirstName = "blah"; will not compile
+                p.SetFirstNameAndLastName("John", "Lennon");
+                p.Age = -1; // will throw an exception
+                s.Save(p);
+                tx.Commit();
+            }
+        }
+
+        static void TestList()
+        {
+            using (var s = SessionMapper.Mapper.SessionFactory.OpenSession())
+            using (var tx = s.BeginTransaction())
+            {
+
+                var aPersons = Person.AllStartsWithJ(s.Query<Person>());
+
+                foreach (var item in aPersons)
+                {
+                    Console.WriteLine("{0}",item.FirstName);
+                }
+
+                tx.Commit();
+
+                Console.ReadKey();
+            }
+        }
 
         private static void TestEagerLoad()
         {

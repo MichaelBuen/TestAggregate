@@ -10,9 +10,31 @@ namespace TestDdd.DomainModelMappings
 		public PersonMapping ()
 		{
 			Table ("person");
-			Id (x => x.PersonId, c => c.Column("person_id"));
-			Property (x => x.FirstName, c => c.Column ("first_name"));
-			Property (x => x.LastName, c => c.Column("last_name"));
+            
+            Id(x => x.PersonId, c => 
+            {
+                c.Column("person_id");
+                c.Access(NHibernate.Mapping.ByCode.Accessor.Field);
+                c.Generator(NHibernate.Mapping.ByCode.Generators.Sequence, m => m.Params(new { sequence = "person_person_id_seq" }));
+            });
+
+            Property(x => x.FirstName, c => 
+            {
+                c.Column("first_name");
+                c.Access(NHibernate.Mapping.ByCode.Accessor.Field);
+            });
+
+            Property(x => x.LastName, c =>
+            {
+                c.Column("last_name");
+                c.Access(NHibernate.Mapping.ByCode.Accessor.Field);
+            });
+
+            Property(x => x.Age, c =>
+            {
+                c.Column("age");
+                c.Access(NHibernate.Mapping.ByCode.Accessor.Field);
+            });
             
 
             Bag(list => list.FavoriteHobbies,

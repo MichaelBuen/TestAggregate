@@ -12,3 +12,4 @@ C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\bin\Debug\Npgsql.p
 C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\bin\Debug\Npgsql.xml
 C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\bin\Debug\policy.2.0.Npgsql.config
 C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\obj\x86\Debug\TestAggregate.pdb
+C:\Users\Michael\Documents\GitHub\TestAggregate\TestAggregate\obj\x86\Debug\TestDDD.csprojResolveAssemblyReference.cache

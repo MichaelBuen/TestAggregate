@@ -9,11 +9,55 @@ using TestDdd.DomainModels;
 namespace TestDdd.DomainModels
 {
 	public class Person
-	{
-		public virtual int PersonId { get; set; }
+    {
 
-		public virtual string FirstName { get; set; }
-		public virtual string LastName { get; set; }
+#pragma warning disable 0649
+        int _personId;
+#pragma warning restore
+        public virtual int PersonId { get { return _personId; } }
+        
+
+        string _firstName;
+		public virtual string FirstName  { get { return _firstName; } }
+        string _lastName;
+        public virtual string LastName { get { return _lastName; } }
+
+        public virtual void SetFirstNameAndLastName(string firstName, string lastName)
+        {
+            // Domain business rules and validation goes here
+
+            // if firstname in censored words throw exception
+            // if lastname in censored words throw exception
+
+            // firstname might not be in censored words, and the lastname too; but putting them together might be a censored phrase
+            // e.g. Firstname is Jack, Lastname is Off
+            // if it is, throw an exception
+
+
+            // If the values conforms to business rules and validation, set the backing fields
+            _firstName = firstName;
+            _lastName = lastName;
+        }
+
+        public virtual string MiddleName { get; set; } // needs no validation
+
+        int _age;
+        public virtual int Age 
+        {
+            get { return _age; }
+            set
+            {
+                // Domain business rules and validation goes here
+
+                if (_age <= 0)
+                    throw new Exception("Can't set age lower than 0");
+
+                _age = value;
+
+            }
+        }
+
+
 
 		public virtual IList<FavoriteHobby> FavoriteHobbies { get; set; }
 
@@ -36,6 +80,11 @@ namespace TestDdd.DomainModels
         public virtual void AccessingAnyMethodOrPropertyOfTheModelWillEagerLoadTheModel()
         {
 
+        }
+
+        public static IQueryable<Person> AllStartsWithJ(IQueryable<Person> persons)
+        {
+            return persons.Where(x => x.FirstName.StartsWith("J"));
         }
 
 
@@ -144,6 +193,7 @@ namespace TestDdd.DomainModels
 
         public static int GetFavoriteActiveHobbiesCountFromQueryableExtensionMethod(this Person p, IQueryable<FavoriteHobby> fh)
         {
+            Console.WriteLine("Name: {0}", p.FirstName);
             Console.WriteLine("Extension method version");
             return fh.Count(x => x.Person == p && x.IsActive);
         }

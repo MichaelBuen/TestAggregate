@@ -7,7 +7,9 @@ create table person
 (
 	person_id serial primary key,
 	first_name text not null,
-	last_name text not null
+	last_name text not null,
+	middle_name text not null default '',
+	age int not null default 0
 );
 
 
