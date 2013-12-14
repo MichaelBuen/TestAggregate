@@ -42,7 +42,8 @@ namespace TestDdd
             {
                 var p = new Person();
                 // p.FirstName = "blah"; will not compile
-                p.SetFirstNameAndLastName("John", "Lennon");
+                p.SetFirstNameAndLastName("John", "Lennon"  /* , pass an IQueryable<BannedPhrases> here */);
+                // p._firstName = "blah"; // This is not accessible outside of this assembly
                 p.Age = -1; // will throw an exception
                 s.Save(p);
                 tx.Commit();

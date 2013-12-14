@@ -2,8 +2,11 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="TestDdd.DomainModels.Person">
     <Position X="1.5" Y="0.75" Width="4.25" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAEAAAAAABABEAARBAAEAIAAAAAAEBAAAAAEAAAg=</HashCode>
+      <HashCode>AAEAAEAAAAAABABEAMVRAAEAIAAAAAgEBAAQAAEAAAg=</HashCode>
       <FileName>DomainModels\Person.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -18,7 +21,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TestDdd.DomainModels.FavoriteHobby">
-    <Position X="1.5" Y="5.25" Width="1.5" />
+    <Position X="7.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAQAAAAAEAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
       <FileName>DomainModels\FavoriteStuff.cs</FileName>

@@ -17,27 +17,11 @@ namespace TestDdd.DomainModels
         public virtual int PersonId { get { return _personId; } }
         
 
-        string _firstName;
+        internal string _firstName;
 		public virtual string FirstName  { get { return _firstName; } }
-        string _lastName;
+        internal string _lastName;
         public virtual string LastName { get { return _lastName; } }
 
-        public virtual void SetFirstNameAndLastName(string firstName, string lastName)
-        {
-            // Domain business rules and validation goes here
-
-            // if firstname in censored words throw exception
-            // if lastname in censored words throw exception
-
-            // firstname might not be in censored words, and the lastname too; but putting them together might be a censored phrase
-            // e.g. Firstname is Jack, Lastname is Off
-            // if it is, throw an exception
-
-
-            // If the values conforms to business rules and validation, set the backing fields
-            _firstName = firstName;
-            _lastName = lastName;
-        }
 
         public virtual string MiddleName { get; set; } // needs no validation
 
@@ -261,7 +245,34 @@ namespace TestDdd.DomainModels
 
         }
 
+
+
+        public static void SetFirstNameAndLastName(
+            this Person person, 
+            string firstName, 
+            string lastName
+            // IQueryable<BannedPhrase> bannedPhrases
+            )
+        {
+            // Domain business rules and validation goes here
+
+            // if firstname in censored words throw exception
+            // if lastname in censored words throw exception
+
+            // validate firstname + lastname from bannedPhrases
+            // firstname might not be in censored words, and the lastname too; but putting them together might be in censored phrases
+            // e.g. Firstname is Jack, Lastname is Off
+            // if it is, throw an exception
+
+           
+
+
+            // If the values conforms to business rules and validation, set the backing fields
+            person._firstName = firstName;
+            person._lastName = lastName;
+        }
      
+
     }
 }
 
