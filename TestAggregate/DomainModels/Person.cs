@@ -17,10 +17,8 @@ namespace TestDdd.DomainModels
         public virtual int PersonId { get { return _personId; } }
         
 
-        internal string _firstName;
-		public virtual string FirstName  { get { return _firstName; } }
-        internal string _lastName;
-        public virtual string LastName { get { return _lastName; } }
+        public virtual string FirstName { get; protected  internal set; }
+        public virtual string LastName { get; protected internal set; }
 
 
         public virtual string MiddleName { get; set; } // needs no validation
@@ -177,7 +175,9 @@ namespace TestDdd.DomainModels
 
         public static int GetFavoriteActiveHobbiesCountFromQueryableExtensionMethod(this Person p, IQueryable<FavoriteHobby> fh)
         {
-            Console.WriteLine("Name: {0}", p.FirstName);
+            // If we don't access any of the properties of the Person p, the Person instance p will not be fetched from the database
+            // Console.WriteLine("Name: {0}", p.FirstName);
+
             Console.WriteLine("Extension method version");
             return fh.Count(x => x.Person == p && x.IsActive);
         }
@@ -267,9 +267,10 @@ namespace TestDdd.DomainModels
            
 
 
-            // If the values conforms to business rules and validation, set the backing fields
-            person._firstName = firstName;
-            person._lastName = lastName;
+            // If the values conforms to business rules and validation, set the backing fields            
+            person.FirstName = firstName;
+            person.LastName = lastName;
+            ;
         }
      
 

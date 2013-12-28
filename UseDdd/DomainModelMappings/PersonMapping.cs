@@ -21,13 +21,13 @@ namespace TestDdd.DomainModelMappings
             Property(x => x.FirstName, c => 
             {
                 c.Column("first_name");
-                c.Access(NHibernate.Mapping.ByCode.Accessor.Field);
+                // c.Access(NHibernate.Mapping.ByCode.Accessor.Field);
             });
 
             Property(x => x.LastName, c =>
             {
                 c.Column("last_name");
-                c.Access(NHibernate.Mapping.ByCode.Accessor.Field);
+                // c.Access(NHibernate.Mapping.ByCode.Accessor.Field);
             });
 
             Property(x => x.Age, c =>

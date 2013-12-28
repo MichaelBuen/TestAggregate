@@ -1,15 +1,20 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
-using NHibernate.Linq;
+using TestDdd;
 using TestDdd.DomainModels;
 
-namespace TestDdd
+using NHibernate;
+using NHibernate.Linq;
+
+namespace UseDdd
 {
-	class MainClass
-	{
-		public static void Main (string[] args)
-		{
+    public class MainClass
+    {
+        public static void Main(string[] args)
+        {
             //TestAddFavoriteHobbies();
 
             //TestUpdateFavoriteHobbies();
@@ -18,7 +23,7 @@ namespace TestDdd
 
             //TestMostFavorite();
 
-            // TestFavoriteCountPragmatic();
+            TestFavoriteCountPragmatic();
 
             //TestListMostFavorite();
 
@@ -26,11 +31,11 @@ namespace TestDdd
 
             // TestList();
 
-            TestAddPerson();
+            // TestAddPerson();
 
             Console.ReadKey();
 
-		}
+        }
 
         private static void TestAddPerson()
         {
@@ -41,7 +46,7 @@ namespace TestDdd
             using (var tx = s.BeginTransaction())
             {
                 var p = new Person();
-                // p.FirstName = "blah"; will not compile
+                // p.FirstName = "blah"; // will not compile
                 p.SetFirstNameAndLastName("John", "Lennon"  /* , pass an IQueryable<BannedPhrases> here */);
                 // p._firstName = "blah"; // This is not accessible outside of this assembly
                 p.Age = -1; // will throw an exception
@@ -60,7 +65,7 @@ namespace TestDdd
 
                 foreach (var item in aPersons)
                 {
-                    Console.WriteLine("{0}",item.FirstName);
+                    Console.WriteLine("{0}", item.FirstName);
                 }
 
                 tx.Commit();
@@ -83,24 +88,24 @@ namespace TestDdd
         }
 
 
-		static void TestAddFavoriteHobbies()
-		{
-			using (var s = SessionMapper.Mapper.SessionFactory.OpenSession()) 
-			using(var tx = s.BeginTransaction())
-			{
-				var p = s.Load<Person> (1);
-                
-                var fh = new FavoriteHobby { Hobby = "xAdd : " +  DateTime.Now.ToString () };
-				p.AddFavoriteHobby (fh, s.Save);  
+        static void TestAddFavoriteHobbies()
+        {
+            using (var s = SessionMapper.Mapper.SessionFactory.OpenSession())
+            using (var tx = s.BeginTransaction())
+            {
+                var p = s.Load<Person>(1);
 
-				p.ApplyBusinessLogic (actionWhenValidated: tx.Commit);
-			}//using
-		}
+                var fh = new FavoriteHobby { Hobby = "xAdd : " + DateTime.Now.ToString() };
+                p.AddFavoriteHobby(fh, s.Save);
 
-		
+                p.ApplyBusinessLogic(actionWhenValidated: tx.Commit);
+            }//using
+        }
 
-		static void TestUpdateFavoriteHobbies ()
-		{
+
+
+        static void TestUpdateFavoriteHobbies()
+        {
 
 
             using (var s = SessionMapper.Mapper.SessionFactory.OpenSession())
@@ -133,47 +138,47 @@ namespace TestDdd
 
 
             }//using
-    
-		}
+
+        }
 
 
 
 
-		static void TestDeleteFavoriteHobbies ()
-	    {
-                using (var s = SessionMapper.Mapper.SessionFactory.OpenSession())
-                using (var tx = s.BeginTransaction())
-                {
-                  
-                    var p = s.Load<Person>(1);
+        static void TestDeleteFavoriteHobbies()
+        {
+            using (var s = SessionMapper.Mapper.SessionFactory.OpenSession())
+            using (var tx = s.BeginTransaction())
+            {
 
-                    //bool isInit = NHibernate.NHibernateUtil.IsInitialized(p.FavoriteHobbiess);
-                    
-                    var fh = s.Load<FavoriteHobby>(23);
+                var p = s.Load<Person>(1);
 
-                    // If you know that a collection has no further collection, it's better to optimize the delete...
-                    p.DeleteFavoriteHobby(fh, () => s.Delete(new FavoriteHobby { FavoriteHobbyId = fh.FavoriteHobbyId }));
+                //bool isInit = NHibernate.NHibernateUtil.IsInitialized(p.FavoriteHobbiess);
 
-                    //// ...otherwise, delete it via object, so delete can be cascaded:
-                    //p.DeleteFavoriteHobby(fh, () => s.Delete(fh));
+                var fh = s.Load<FavoriteHobby>(23);
 
-                    //// ...or if the FavoriteHobby list is already eagerly-loaded, delete it from the collection
-                    //p.DeleteFavoriteHobby(fh);
+                // If you know that a collection has no further collection, it's better to optimize the delete...
+                p.DeleteFavoriteHobby(fh, () => s.Delete(new FavoriteHobby { FavoriteHobbyId = fh.FavoriteHobbyId }));
 
-                    // p.DeleteFavoriteHobby(fh); eager-loads both Person and FavoriteHobby
+                //// ...otherwise, delete it via object, so delete can be cascaded:
+                //p.DeleteFavoriteHobby(fh, () => s.Delete(fh));
 
-                    p.ApplyBusinessLogic(actionWhenValidated: () => tx.Commit());
-                    
-                }//using
-  
-		}
+                //// ...or if the FavoriteHobby list is already eagerly-loaded, delete it from the collection
+                //p.DeleteFavoriteHobby(fh);
+
+                // p.DeleteFavoriteHobby(fh); eager-loads both Person and FavoriteHobby
+
+                p.ApplyBusinessLogic(actionWhenValidated: () => tx.Commit());
+
+            }//using
+
+        }
 
 
 
-		static void TestMostFavorite ()
-		{
-			using (var s = SessionMapper.Mapper.SessionFactory.OpenSession()) 
-			using(var tx = s.BeginTransaction())
+        static void TestMostFavorite()
+        {
+            using (var s = SessionMapper.Mapper.SessionFactory.OpenSession())
+            using (var tx = s.BeginTransaction())
             {
                 var p = s.Load<Person>(1);
 
@@ -201,15 +206,15 @@ namespace TestDdd
                 }
 
             }//using
-		}
+        }
 
 
 
-		
-		static void TestFavoriteCountPragmatic ()
-		{
-			using (var s = SessionMapper.Mapper.SessionFactory.OpenSession ())
-			using (var tx = s.BeginTransaction ())
+
+        static void TestFavoriteCountPragmatic()
+        {
+            using (var s = SessionMapper.Mapper.SessionFactory.OpenSession())
+            using (var tx = s.BeginTransaction())
             {
                 var p = s.Load<Person>(1);
 
@@ -242,11 +247,11 @@ namespace TestDdd
                 {
                     //DDD and performant. Person is not eagerly-loaded anymore, as we didn't touch any of the properties or methods of the Person model.
                     //The technique is to use extension method
-                    var count = p.GetFavoriteActiveHobbiesCountFromQueryableExtensionMethod(s.Query<FavoriteHobby>());
-                    Console.WriteLine("{0}", count); 
+                    var count = p.GetFavoriteActiveHobbiesCountFromQueryableExtensionMethod(s.Query<FavoriteHobby>());                    
+                    Console.WriteLine("{0}", count);
                 }
             }
-		}
+        }
 
         static void TestListMostFavorite()
         {
@@ -264,5 +269,6 @@ namespace TestDdd
             }
         }
 
-	}//MainClass
+    }//MainClass
+
 }

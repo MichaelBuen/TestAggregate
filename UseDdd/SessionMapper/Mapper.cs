@@ -9,7 +9,7 @@ using NHibernate.Mapping.ByCode;
 
 using TestDdd.DomainModelMappings;
 
-namespace TestDdd.SessionMapper
+namespace UseDdd.SessionMapper
 {
 	public static class Mapper
 	{

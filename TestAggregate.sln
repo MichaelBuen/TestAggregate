@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDDD", "TestAggregate\TestDDD.csproj", "{AFFE30C0-2F7D-4BBB-A796-8B9B07A1D893}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UseDdd", "UseDdd\UseDdd.csproj", "{39CD797E-C2BD-4604-89ED-710BB1151F1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +15,13 @@ Global
 		{AFFE30C0-2F7D-4BBB-A796-8B9B07A1D893}.Debug|x86.Build.0 = Debug|x86
 		{AFFE30C0-2F7D-4BBB-A796-8B9B07A1D893}.Release|x86.ActiveCfg = Release|x86
 		{AFFE30C0-2F7D-4BBB-A796-8B9B07A1D893}.Release|x86.Build.0 = Release|x86
+		{39CD797E-C2BD-4604-89ED-710BB1151F1F}.Debug|x86.ActiveCfg = Debug|x86
+		{39CD797E-C2BD-4604-89ED-710BB1151F1F}.Debug|x86.Build.0 = Debug|x86
+		{39CD797E-C2BD-4604-89ED-710BB1151F1F}.Release|x86.ActiveCfg = Release|x86
+		{39CD797E-C2BD-4604-89ED-710BB1151F1F}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = TestAggregate\TestDDD.csproj
